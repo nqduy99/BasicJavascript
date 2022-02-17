@@ -1,106 +1,67 @@
+// 1. Dễ hiểu
+// 2. Ngăn gọn: dễ nhìn
+// 3. Hiệu năng: for tốt hơn nhưng ko đáng kể
 
-// var a = ['a', 'b', 'c', 'd', 'a', 'a', 'c'];
-
-// var lengthA= a.length; // 7
-
-// for(var i = 0; i< lengthA-1; i++) {
-//     var count = 0;
-//     console.log(`a[i]: `, a[i]);
-//     for( var j = i + 1; j < lengthA ; j++){
-//         if(a[j] === a[i]){
-//             count++;
-//         }
-//         console.log(`a[j]: `,a[j]);
-//     }
-//     console.log(`Phan tu ${a[i]} bi trung ${count} lan`)
-// }
-
-//Ham Dem nguoc
-function countDown(number){
-    if(number > 0) {
-        console.log(number);
-        return countDown(number - 1);
-    }
-
-    return number;
-    
-}
-// var a= countDown(10)
-// console.log(a)
-
-//Tinh giai thua
-function giaiThua(number){
-    if(number > 0){
-        return number * giaiThua(number-1)
-    }
-    return 1;
-}
-
-// console.log(giaiThua(6))
-
-var a = [1,2,3,4,5,6,7];
-
-function checkPositiveNumbers(numbers) {
-    var isLonHon0 = numbers.every(function(number, index){
-        return number > 0;
-    })
-    return isLonHon0;
-}
-
-// var isLonHon0 = checkPositiveNumbers(a)
-// console.log(isLonHon0)
-
-function hasFreeCourses(courses) {
-    var isFree = courses.every(function(course){
-        return course.vnd === 0;
-    })
-    return isFree;
-}
-
-var b = [
-    { name: 'Javascript', vnd: 1000000 },
-    { name: 'PHP', vnd: 990000 },
-    { name: 'HTML, CSS', vnd: 0 }
-    // ...
-]
-
-// var isFree = hasFreeCourses(b)
-// console.log(isFree)
-
-//
-var monster = [
+var courses = [
     {
-        name: 'Cá heo',
-        attack: 50,
-        speed: 100,
-        hitpoint: 100
+        id: 1,
+        name: 'Javascript',
+        coin: 0
     },
     {
-        name: 'Khủng long',
-        attack: 150,
-        speed: 80,
-        hitpoint: 180
-    }
+        id: 2,
+        name: 'HTML, CSS',
+        coin: 1
+    },
+    {
+        id: 3,
+        name: 'Ruby',
+        coin: 1
+    },
+    {
+        id: 4,
+        name: 'PHP',
+        coin: 200
+    },
 ]
 
-function findAMonsterByAttack(monsters) {
-    var isExist = ''
-    isExist = monsters.find(function(monster){
-        return monster.attack === 150;
-    })
-    return isExist;
+function courseHandler(course, index) {
+    return {
+        index: index,
+        id: course,
+        name: `Khoa hoc ${course.name}`,
+        coin: course.coin,
+        coinText: `Gia: ${course.coin}` 
+    }
 }
 
-// var monster = findAMonsterByAttack(monster)
-// console.log(monster)
+// var newCourses = courses.map(courseHandler)
+// console.log(newCourses)
 
-function findStringsInArrayByKeyword(keyword, strings) {
-    var isOK = strings.filter(function(string){
-        return string.indexOf(`${keyword}`) >= 0;
-    })
-    return isOK === undefined ? [] : isOK;
+function getHTMLfromArray(htmlCodes) {
+    var html = htmlCodes.map(function(htmlCode){
+        return `<h1>${htmlCode}</h1>`
+    });
+    return html.join('')
+} 
+
+//Ham reduce() trong Array
+
+var i = 0;
+function coinHandler(accumulator, currentValue, currentIndex, originArray){
+    total = accumulator + currentValue.coin;
+    i++;
+    // console.table({
+    //     'Luot chay: ': i,
+    //     'Bien luu tru: ': accumulator,
+    //     'Gia tri hien tai: ': currentValue.coin,
+    //     'Tong: ': total
+    // })
+    return total;
 }
 
-var languages = ['Javascript', 'PHP', 'Hoc PHP']
-var isOK = findStringsInArrayByKeyword('PHP', languages)
-console.log(isOK)
+var totalCoin = courses.reduce(coinHandler, 0)
+// console.log(totalCoin)
+
+
+
